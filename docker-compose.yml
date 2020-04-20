@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+
+  nginx:
+    restart: unless-stopped
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+    ports:
+      - 80:80
+      - 443:443
+    links:
+      - jenkins
+
+  jenkins:
+    restart: unless-stopped
+    image: jenkins:latest
+    container_name: jenkins
+    volumes:
+      # Persist Container Restarts
+      - ./jenkins:/var/jenkins_home
+      # Allow jenkins to launch other containers.
+      - /var/run/docker.sock:/var/run/docker.sock
+    expose:
+      - 8080
