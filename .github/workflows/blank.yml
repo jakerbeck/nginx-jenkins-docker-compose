@@ -25,4 +25,9 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Run a multi-line script
       run: |
-        env
+        COMMIT_MESSAGE=$(/usr/bin/git log --pretty=oneline --abbrev-commit -1)
+        if [[ "$COMMIT_MESSAGE" != *"trigger-deployment"* ]]; then
+            echo "Skip deployment.  Add 'trigger-deployment' to a commit message to deploy."
+        else
+            echo "Starting Deployment"
+        fi
