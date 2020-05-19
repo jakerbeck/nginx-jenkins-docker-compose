@@ -19,7 +19,7 @@ services:
 
   jenkins:
     restart: unless-stopped
-    image: jenkins:latest
+    image:  jenkins/jenkins:lts
     container_name: jenkins
     volumes:
       # Persist Container Restarts
